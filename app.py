@@ -1,9 +1,8 @@
-from PIL import Image
 import streamlit as st
+from PIL import Image
 
 st.set_page_config(page_title="Happy Birthday Trapti!", page_icon="🎉")
 
-# Initialize session state variable 'page' if not already
 if 'page' not in st.session_state:
     st.session_state.page = 'intro'
 
@@ -42,7 +41,6 @@ def show_surprise():
         st.session_state.page = 'intro'
         st.experimental_rerun()
 
-# Page router
 if st.session_state.page == 'intro':
     show_intro()
 elif st.session_state.page == 'surprise':
