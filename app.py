@@ -1,39 +1,49 @@
 from PIL import Image
 import streamlit as st
-import time
 
-
-
-# Set up the page
 st.set_page_config(page_title="Happy Birthday Trapti!", page_icon="🎉")
-audio_file = open('birthday_song.mp3', 'rb')
-audio_bytes = audio_file.read()
-st.audio(audio_bytes, format='audio/mp3')
 
-# Display the image
-image = Image.open("aef6e260-e320-43ae-881e-39803cce7cae.png")
-st.image(image, caption="Happy Birthday Trapti! 💖", use_column_width=True)
+# Initialize session state variable 'page' if not already
+if 'page' not in st.session_state:
+    st.session_state.page = 'intro'
 
-# Main header
-st.markdown("<h1 style='text-align: center; color: pink;'>🎂 Happy Birthday Trapti! 🎈</h1>", unsafe_allow_html=True)
+def show_intro():
+    st.markdown("<h1 style='text-align: center; color: pink;'>Welcome to your Birthday Surprise! 🎉</h1>", unsafe_allow_html=True)
+    st.markdown("Click the button below to see your special birthday message and surprise!")
+    if st.button('🎈 Open Surprise'):
+        st.session_state.page = 'surprise'
+        st.experimental_rerun()
 
-# ASCII cake
-cake = """
-           ,   ,   ,   ,   ,   ,
-         {|||||||||||||||||||||}
-         {~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~}
-         {~ Happy Birthday!!! ~}
-         {~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~}
-         {|||||||||||||||||||||}
-           \___|___|___|___|___/
-            🎂  🎂  🎂  🎂  🎂
-"""
-st.markdown(f"<pre style='text-align: center;'>{cake}</pre>", unsafe_allow_html=True)
+def show_surprise():
+    image = Image.open("aef6e260-e320-43ae-881e-39803cce7cae.png")
+    st.image(image, caption="Happy Birthday Trapti! 💖", use_column_width=True)
 
-# Birthday messages
-st.markdown("### 💖 I may not be there in person, but my heart is with you.")
-st.markdown("### 🥰 Wishing you a day as beautiful and special as you are.")
-st.markdown("### 💌 Love you always!")
+    st.markdown("<h1 style='text-align: center; color: pink;'>🎂 Happy Birthday Trapti! 🎈</h1>", unsafe_allow_html=True)
 
-# Balloons animation
-st.balloons()
+    cake = """
+               ,   ,   ,   ,   ,   ,
+             {|||||||||||||||||||||}
+             {~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~}
+             {~ Happy Birthday!!! ~}
+             {~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~}
+             {|||||||||||||||||||||}
+               \___|___|___|___|___/
+                🎂  🎂  🎂  🎂  🎂
+    """
+    st.markdown(f"<pre style='text-align: center;'>{cake}</pre>", unsafe_allow_html=True)
+
+    st.markdown("### 💖 I may not be there in person, but my heart is with you.")
+    st.markdown("### 🥰 Wishing you a day as beautiful and special as you are.")
+    st.markdown("### 💌 Love you always!")
+
+    st.balloons()
+
+    if st.button('🔙 Back to Intro'):
+        st.session_state.page = 'intro'
+        st.experimental_rerun()
+
+# Page router
+if st.session_state.page == 'intro':
+    show_intro()
+elif st.session_state.page == 'surprise':
+    show_surprise()
