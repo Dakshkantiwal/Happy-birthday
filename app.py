@@ -1,3 +1,9 @@
+from PIL import Image
+import streamlit as st
+import time
+
+
+
 # Set up the page
 st.set_page_config(page_title="Happy Birthday Trapti!", page_icon="🎉")
 
