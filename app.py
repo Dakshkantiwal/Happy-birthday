@@ -65,17 +65,12 @@ def show_letter_page():
     """
     st.markdown(f"<pre style='text-align: center;'>{cake}</pre>", unsafe_allow_html=True)
 
-    # Floating fireflies or stars
-    if floating_fireflies:
-        st_lottie(floating_fireflies, height=200)
+ 
 
     # Typing message
     if st.button("📜 Reveal Birthday Message"):
         type_writer("I may not be there in person, but my heart is with you 💖\nWishing you a day as beautiful and special as you are.\nLove you always!")
 
-    # Floating hearts
-    if floating_hearts:
-        st_lottie(floating_hearts, height=150)
 
     # Memory timeline
     st.markdown("---")
