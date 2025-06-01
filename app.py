@@ -26,10 +26,6 @@ def load_lottie_url(url: str):
         return None
     return r.json()
 
-# Load animations
-floating_hearts = load_lottie_url("https://assets10.lottiefiles.com/packages/lf20_ydo1amjm.json")
-floating_fireflies = load_lottie_url("https://assets1.lottiefiles.com/packages/lf20_JUr2Xt.json")
-
 # --- Typing Animation ---
 def type_writer(message):
     typed_text = ""
