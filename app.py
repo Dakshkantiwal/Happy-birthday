@@ -66,16 +66,13 @@ def show_intro():
 def show_letter_page():
     st.markdown("<h2>📬 You've got a letter!</h2>", unsafe_allow_html=True)
 
-    # Show Lottie animation if loaded, else fallback to GIF
+    # Show Lottie animation if loaded, else fallback to static letter image
     if envelope_lottie:
         st_lottie(envelope_lottie, height=300)
     else:
-        # Fallback to online animated GIF
-        st.image(
-            "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif",
-            caption="Tap to open your birthday letter 💌",
-            use_container_width=True
-        )
+        # Static letter image fallback (make sure letter.png is in your folder)
+        letter_img = Image.open("letter.png")
+        st.image(letter_img, caption="Your birthday letter 💌", use_container_width=True)
 
     if not st.session_state.letter_opened:
         if st.button("💌 Open the Letter"):
