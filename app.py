@@ -11,7 +11,6 @@ def show_intro():
     st.markdown("Click the button below to see your special birthday message and surprise!")
     if st.button('🎈 Open Surprise'):
         st.session_state.page = 'surprise'
-        st.experimental_rerun()
 
 def show_surprise():
     image = Image.open("aef6e260-e320-43ae-881e-39803cce7cae.png")
@@ -39,9 +38,9 @@ def show_surprise():
 
     if st.button('🔙 Back to Intro'):
         st.session_state.page = 'intro'
-        st.experimental_rerun()
 
+# Simple page router without rerun
 if st.session_state.page == 'intro':
     show_intro()
-elif st.session_state.page == 'surprise':
+else:
     show_surprise()
