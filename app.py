@@ -22,7 +22,8 @@ col1, col2 = st.columns([1, 1])
 
 with col1:
     image = Image.open("aef6e260-e320-43ae-881e-39803cce7cae.png")
-    st.image(image, caption="Happy Birthday Trapti! 💖", use_column_width=True)
+    st.image(image, caption="Happy Birthday Trapti! 💖", use_container_width=True)
+
 
 with col2:
     st.markdown("<h1>🎂 Happy Birthday Trapti! 🎈</h1>", unsafe_allow_html=True)
