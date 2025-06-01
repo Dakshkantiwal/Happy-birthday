@@ -28,7 +28,7 @@ with col1:
 with col2:
     st.markdown("<h1>🎂 Happy Birthday Trapti! 🎈</h1>", unsafe_allow_html=True)
     st.markdown("""
-    <h3>💖 Though miles apart, my heart is with you.</h3>
+    <h3>💖 I may not be there, my heart is with you.</h3>
     <h3>🥰 Wishing you joy, love, and laughter today and always.</h3>
     <h3>💌 Love you endlessly!</h3>
     """, unsafe_allow_html=True)
