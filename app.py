@@ -6,7 +6,10 @@ import time
 
 # Set up the page
 st.set_page_config(page_title="Happy Birthday Trapti!", page_icon="🎉")
-st.video("https://youtu.be/8QF9hM1MQwc?feature=shared")  # Happy Birthday song
+audio_file = open('birthday_song.mp3', 'rb')
+audio_bytes = audio_file.read()
+st.audio(audio_bytes, format='audio/mp3')
+
 
 # Display the image
 image = Image.open("aef6e260-e320-43ae-881e-39803cce7cae.png")
