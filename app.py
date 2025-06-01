@@ -6,9 +6,6 @@ import requests
 # Page setup
 st.set_page_config(page_title="Happy Birthday Trapti!", page_icon="🎉")
 
-# Debug marker to confirm loading
-st.write("✅ App loaded!")
-
 # Background and styling
 st.markdown("""
     <style>
@@ -38,7 +35,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Load Lottie animation
+# Load Lottie animation from URL
 def load_lottie_url(url: str):
     try:
         r = requests.get(url)
@@ -52,32 +49,33 @@ def load_lottie_url(url: str):
 
 envelope_lottie = load_lottie_url("https://assets9.lottiefiles.com/packages/lf20_jcikwtux.json")
 
-# Session states
+# Initialize session state variables
 if 'page' not in st.session_state:
     st.session_state.page = 'intro'
 if 'letter_opened' not in st.session_state:
     st.session_state.letter_opened = False
 
-# Intro page
+# Intro page function
 def show_intro():
     st.markdown("<h1>🎉 Welcome to Your Birthday Surprise, Trapti! 🎉</h1>", unsafe_allow_html=True)
     st.markdown("<h3>Click below to open your special message 💌</h3>", unsafe_allow_html=True)
     if st.button("✨ Open Surprise ✨"):
         st.session_state.page = 'letter'
 
-# Letter page
+# Letter page function
 def show_letter_page():
     st.markdown("<h2>📬 You've got a letter!</h2>", unsafe_allow_html=True)
 
-    try:
-        if envelope_lottie:
-            st_lottie(envelope_lottie, height=300)
-        else:
-            envelope = Image.open("your_envelope_image.png")
-            st.image(envelope, caption="Tap to open your birthday letter 💌", use_container_width=True)
-    except Exception as e:
-        st.warning("Couldn't load envelope animation or image.")
-        st.text(str(e))
+    # Show Lottie animation if loaded, else fallback to GIF
+    if envelope_lottie:
+        st_lottie(envelope_lottie, height=300)
+    else:
+        # Fallback to online animated GIF
+        st.image(
+            "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif",
+            caption="Tap to open your birthday letter 💌",
+            use_container_width=True
+        )
 
     if not st.session_state.letter_opened:
         if st.button("💌 Open the Letter"):
@@ -105,7 +103,7 @@ def show_letter_page():
             st.session_state.page = 'intro'
             st.session_state.letter_opened = False
 
-# Router
+# Router to switch pages
 if st.session_state.page == 'intro':
     show_intro()
 elif st.session_state.page == 'letter':
