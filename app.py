@@ -51,7 +51,7 @@ def show_letter_page():
 
     # Optional image
     try:
-        image = Image.open("your_image.png")  # Replace with your image filename
+        image = Image.open("trapti-smile.jpg")  # Replace with your image filename
         st.image(image, caption="A Special Memory 💕", use_container_width=True)
     except:
         st.warning("Image not found. Please check the filename.")
