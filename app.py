@@ -3,44 +3,33 @@ from PIL import Image
 
 st.set_page_config(page_title="Happy Birthday Trapti!", page_icon="🎉")
 
-if 'page' not in st.session_state:
-    st.session_state.page = 'intro'
+# Background style
+st.markdown("""
+<style>
+body {
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  font-family: 'Brush Script MT', cursive;
+}
+h1, h2, h3 {
+  color: #fff;
+  text-shadow: 2px 2px 4px #000000;
+}
+</style>
+""", unsafe_allow_html=True)
 
-def show_intro():
-    st.markdown("<h1 style='text-align: center; color: pink;'>Welcome to your Birthday Surprise! 🎉</h1>", unsafe_allow_html=True)
-    st.markdown("Click the button below to see your special birthday message and surprise!")
-    if st.button('🎈 Open Surprise'):
-        st.session_state.page = 'surprise'
+# Page content
+col1, col2 = st.columns([1, 1])
 
-def show_surprise():
+with col1:
     image = Image.open("aef6e260-e320-43ae-881e-39803cce7cae.png")
     st.image(image, caption="Happy Birthday Trapti! 💖", use_column_width=True)
 
-    st.markdown("<h1 style='text-align: center; color: pink;'>🎂 Happy Birthday Trapti! 🎈</h1>", unsafe_allow_html=True)
+with col2:
+    st.markdown("<h1>🎂 Happy Birthday Trapti! 🎈</h1>", unsafe_allow_html=True)
+    st.markdown("""
+    <h3>💖 Though miles apart, my heart is with you.</h3>
+    <h3>🥰 Wishing you joy, love, and laughter today and always.</h3>
+    <h3>💌 Love you endlessly!</h3>
+    """, unsafe_allow_html=True)
 
-    cake = """
-               ,   ,   ,   ,   ,   ,
-             {|||||||||||||||||||||}
-             {~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~}
-             {~ Happy Birthday!!! ~}
-             {~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~}
-             {|||||||||||||||||||||}
-               \___|___|___|___|___/
-                🎂  🎂  🎂  🎂  🎂
-    """
-    st.markdown(f"<pre style='text-align: center;'>{cake}</pre>", unsafe_allow_html=True)
-
-    st.markdown("### 💖 I may not be there in person, but my heart is with you.")
-    st.markdown("### 🥰 Wishing you a day as beautiful and special as you are.")
-    st.markdown("### 💌 Love you always!")
-
-    st.balloons()
-
-    if st.button('🔙 Back to Intro'):
-        st.session_state.page = 'intro'
-
-# Simple page router without rerun
-if st.session_state.page == 'intro':
-    show_intro()
-else:
-    show_surprise()
+st.balloons()
