@@ -84,10 +84,10 @@ def show_letter_page():
     # Memory timeline
     st.markdown("---")
     st.markdown("### 🕰️ Our Little Timeline")
-    st.markdown("✅ **First call** – The spark started 📞")
-    st.markdown("✅ **First laugh together** – Still my favorite sound 😂")
+    st.markdown("✅ **7 june** – The spark started 📞")
+    st.markdown("✅ **5 june 2023** – Still favorite day")
     st.markdown("✅ **Countless late-night chats** – Never enough 💬")
-    st.markdown("✅ **Today: Your birthday!** – A perfect day to celebrate you 🎉")
+    st.markdown("✅ **5 june 2025: Your birthday!** – A perfect day to celebrate you 🎉")
 
     st.markdown("---")
 
