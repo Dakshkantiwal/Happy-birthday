@@ -2,7 +2,7 @@
 st.set_page_config(page_title="Happy Birthday Trapti!", page_icon="🎉")
 
 # Display the image
-image = Image.open("aef6e260-e320-43ae-881e-39803cce7cae.png")  # Replace with your image filename
+image = Image.open("aef6e260-e320-43ae-881e-39803cce7cae.png")
 st.image(image, caption="Happy Birthday Trapti! 💖", use_column_width=True)
 
 # Main header
@@ -28,6 +28,3 @@ st.markdown("### 💌 Love you always!")
 
 # Balloons animation
 st.balloons()
-from PIL import Image
-import streamlit as st
-import time
