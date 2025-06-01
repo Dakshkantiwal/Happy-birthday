@@ -1,4 +1,4 @@
---------------# Save this as app.py
+# Save this as app.py
 import streamlit as st
 import time
 
