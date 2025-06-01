@@ -24,4 +24,3 @@ st.markdown("### 🥰 Wishing you a day as beautiful and special as you are.")
 st.markdown("### 💌 Love you always!")
 
 st.balloons()
--------------------------------------------------
