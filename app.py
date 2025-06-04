@@ -1,118 +1,107 @@
 import streamlit as st
 from PIL import Image
-from datetime import datetime
+import requests
+import time
+from streamlit_lottie import st_lottie
 
-# Page config
-st.set_page_config(page_title="Happy Birthday Trapti!", page_icon="🎉")
+# --- Page Config ---
+st.set_page_config(page_title="Happy Birthday Trapti!", page_icon="🎉", layout="centered")
 
-# Apply custom CSS for background and styling
+# --- Background Styling ---
 st.markdown("""
     <style>
-        body {
-            background-color: #ffe6f0;
-        }
-        .centered {
-            text-align: center;
-        }
-        .letter-box {
-            background-color: #fff0f5;
-            padding: 20px;
-            border-radius: 15px;
-            margin-top: 20px;
-            box-shadow: 0 0 10px #ffb6c1;
-        }
+    body {
+        background-color: #ffe6f0;
+    }
+    .center {
+        text-align: center;
+    }
     </style>
 """, unsafe_allow_html=True)
 
-# Page state management
-if "page" not in st.session_state:
-    st.session_state.page = "intro"
+# --- Lottie Loader ---
+def load_lottie_url(url: str):
+    r = requests.get(url)
+    if r.status_code != 200:
+        return None
+    return r.json()
 
-# --- Intro Page ---
-if st.session_state.page == "intro":
-    st.markdown("<h1 class='centered' style='color: hotpink;'>Hi Trapti! 💕</h1>", unsafe_allow_html=True)
-    st.markdown("<p class='centered'>Are you ready for your birthday surprise? 👀🎁</p>", unsafe_allow_html=True)
-    if st.button("Yes, let's go! 🎉"):
-        st.session_state.page = "main"
-        st.experimental_rerun()
+# --- Typing Animation ---
+def type_writer(message):
+    typed_text = ""
+    placeholder = st.empty()
+    for char in message:
+        typed_text += char
+        placeholder.markdown(f"<p style='font-size:22px; color:#d6336c;'>{typed_text}</p>", unsafe_allow_html=True)
+        time.sleep(0.05)
 
-# --- Main Birthday Surprise Page ---
-elif st.session_state.page == "main":
-    # Optional image (replace with your own file name)
+# --- Pages ---
+def show_intro():
+    st.markdown("<h1 style='text-align: center; color: #e75480;'>💝 Happy Birthday Trapti!</h1>", unsafe_allow_html=True)
+    st.markdown("### 👋 A little surprise awaits you...")
+    if st.button("💌 Tap to Open Your Letter"):
+        st.session_state.page = "letter"
+
+def show_letter_page():
+    st.markdown("<h2 style='text-align: center; color: #ff4081;'>💖 A Letter for You 💖</h2>", unsafe_allow_html=True)
+
+    # Optional image
     try:
-        image = Image.open("your_image_filename.png")  # Replace with your actual image file
-        st.image(image, caption="Happy Birthday Trapti! 💖", use_container_width=True)
+        image = Image.open("trapti-smile.jpg")  # Replace with your image filename
+        st.image(image, caption="A Special Memory 💕", use_container_width=True)
     except:
-        st.warning("Image not found. Please add your image to the app folder.")
+        st.warning("Image not found. Please check the filename.")
 
-    # Countdown to June 5, 2025
-    countdown_html = """
-    <div style="text-align: center;">
-      <h2 style="color: #ff4b4b;">🎉 Countdown to Your Birthday 🎉</h2>
-      <div id="countdown" style="font-size: 30px; color: #ff66b2;"></div>
-    </div>
-
-    <script>
-      const targetDate = new Date("2025-06-05T00:00:00").getTime();
-      function updateCountdown() {
-        const now = new Date().getTime();
-        const distance = targetDate - now;
-
-        if (distance < 0) {
-          document.getElementById("countdown").innerHTML = "🎈 It's your birthday! 🎈";
-          return;
-        }
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        document.getElementById("countdown").innerHTML =
-          days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-
-        setTimeout(updateCountdown, 1000);
-      }
-      updateCountdown();
-    </script>
-    """
-    st.markdown(countdown_html, unsafe_allow_html=True)
-
-    # Main heading
-    st.markdown("<h1 class='centered' style='color: pink;'>🎂 Happy Birthday Trapti! 🎈</h1>", unsafe_allow_html=True)
-
-    # ASCII cake
+    # Cake
     cake = """
-               ,   ,   ,   ,   ,   ,
-             {|||||||||||||||||||||}
-             {~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~}
-             {~ Happy Birthday!!! ~}
-             {~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~}
-             {|||||||||||||||||||||}
-               \___|___|___|___|___/
-                🎂  🎂  🎂  🎂  🎂
+           ,   ,   ,   ,   ,   ,
+         {|||||||||||||||||||||}
+         {~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~}
+         {~ Happy Birthday!!! ~}
+         {~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~}
+         {|||||||||||||||||||||}
+           \\___|___|___|___|___/
+            🎂  🎂  🎂  🎂  🎂
     """
     st.markdown(f"<pre style='text-align: center;'>{cake}</pre>", unsafe_allow_html=True)
 
-    # Letter (reveal on click)
-    with st.expander("💌 Open Your Letter"):
-        st.markdown("""
-            <div class='letter-box'>
-                <h3 style='text-align: center; color: deeppink;'>To Trapti,</h3>
-                <p style='font-size: 18px; line-height: 1.6; text-align: center;'>
-                Even though miles separate us, my heart celebrates you every single moment. 💖<br><br>
-                On your special day, I wish you joy that lights up your world as brightly as you light up mine. 🌟<br><br>
-                Thank you for being the most beautiful part of my life. This is just the beginning of many birthdays we'll share. 🎁<br><br>
-                Love always,<br>
-                <b>[Your Name]</b>
-                </p>
-            </div>
-        """, unsafe_allow_html=True)
+ 
 
-    # Birthday wishes
-    st.markdown("### 💖 I may not be there in person, but my heart is with you.")
-    st.markdown("### 🥰 Wishing you a day as beautiful and special as you are.")
-    st.markdown("### 💌 Love you always!")
+    # Typing message
+    if st.button("📜 Reveal Birthday Message"):
+        type_writer("I may not be there in person, but my heart is with you 💖\nWishing you a day as beautiful and special as you are.\nLove you always!")
 
-    # Balloons
+
+    # Memory timeline
+    st.markdown("---")
+    st.markdown("### 🕰️ Our Little Timeline")
+    st.markdown("✅ **7 june** – The spark started 📞")
+    st.markdown("✅ **5 june 2023** – Still favorite day")
+    st.markdown("✅ **Countless late-night chats** – Never enough 💬")
+    st.markdown("✅ **5 june 2025: Your birthday!** – A perfect day to celebrate you 🎉")
+
+    st.markdown("---")
+
+    # Secret button to unlock hidden page
+    if st.button("🤫 Psst... Don't click this!"):
+        st.session_state.page = "secret"
+
+def show_secret_page():
+    st.markdown("<h2 style='text-align: center; color: #a020f0;'>🌟 Your Secret Surprise Page 🌟</h2>", unsafe_allow_html=True)
+    st.success("Here's a little secret... You mean the world to me 🥺❤️")
+    st.info("I can't wait to celebrate this day *in person* one day soon.")
     st.balloons()
+    st.markdown("#### 🥰 Bonus Quote:")
+    st.markdown("> *“You are my today and all of my tomorrows.”* — Leo Christopher")
+    st.markdown("⬅️ Click the **back button** in your browser if you want to read the letter again!")
+
+# --- Navigation ---
+if "page" not in st.session_state:
+    st.session_state.page = "intro"
+
+if st.session_state.page == "intro":
+    show_intro()
+elif st.session_state.page == "letter":
+    show_letter_page()
+elif st.session_state.page == "secret":
+    show_secret_page()
