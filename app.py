@@ -2,10 +2,10 @@ import streamlit as st
 from PIL import Image
 from datetime import datetime
 
-# Set page config
+# Page config
 st.set_page_config(page_title="Happy Birthday Trapti!", page_icon="🎉")
 
-# Custom CSS for pink background and centering
+# Apply custom CSS for background and styling
 st.markdown("""
     <style>
         body {
@@ -24,7 +24,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --- SESSION STATE for navigation ---
+# Page state management
 if "page" not in st.session_state:
     st.session_state.page = "intro"
 
@@ -36,48 +36,52 @@ if st.session_state.page == "intro":
         st.session_state.page = "main"
         st.experimental_rerun()
 
-# --- Main Surprise Page ---
+# --- Main Birthday Surprise Page ---
 elif st.session_state.page == "main":
-    # Optional image (add your image file in your app folder)
+    # Optional image (replace with your own file name)
     try:
-        image = Image.open("your_image_filename.png")  # Replace with your image file
+        image = Image.open("your_image_filename.png")  # Replace with your actual image file
         st.image(image, caption="Happy Birthday Trapti! 💖", use_container_width=True)
     except:
         st.warning("Image not found. Please add your image to the app folder.")
 
-    # Countdown timer to June 5, 2025
-    birthday = datetime(2025, 6, 5, 0, 0, 0)
-    countdown_html = f"""
+    # Countdown to June 5, 2025
+    countdown_html = """
     <div style="text-align: center;">
       <h2 style="color: #ff4b4b;">🎉 Countdown to Your Birthday 🎉</h2>
       <div id="countdown" style="font-size: 30px; color: #ff66b2;"></div>
     </div>
+
     <script>
-      const targetDate = new Date("{birthday.strftime('%Y-%m-%dT%H:%M:%S')}").getTime();
-      const countdown = () => {{
+      const targetDate = new Date("2025-06-05T00:00:00").getTime();
+      function updateCountdown() {
         const now = new Date().getTime();
         const distance = targetDate - now;
-        if (distance < 0) {{
+
+        if (distance < 0) {
           document.getElementById("countdown").innerHTML = "🎈 It's your birthday! 🎈";
           return;
-        }}
+        }
+
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        document.getElementById("countdown").innerHTML = 
+
+        document.getElementById("countdown").innerHTML =
           days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-        setTimeout(countdown, 1000);
-      }};
-      countdown();
+
+        setTimeout(updateCountdown, 1000);
+      }
+      updateCountdown();
     </script>
     """
     st.markdown(countdown_html, unsafe_allow_html=True)
 
-    # Header
+    # Main heading
     st.markdown("<h1 class='centered' style='color: pink;'>🎂 Happy Birthday Trapti! 🎈</h1>", unsafe_allow_html=True)
 
-    # ASCII Cake
+    # ASCII cake
     cake = """
                ,   ,   ,   ,   ,   ,
              {|||||||||||||||||||||}
@@ -90,7 +94,7 @@ elif st.session_state.page == "main":
     """
     st.markdown(f"<pre style='text-align: center;'>{cake}</pre>", unsafe_allow_html=True)
 
-    # Letter Section
+    # Letter (reveal on click)
     with st.expander("💌 Open Your Letter"):
         st.markdown("""
             <div class='letter-box'>
@@ -105,10 +109,10 @@ elif st.session_state.page == "main":
             </div>
         """, unsafe_allow_html=True)
 
-    # Birthday messages
+    # Birthday wishes
     st.markdown("### 💖 I may not be there in person, but my heart is with you.")
     st.markdown("### 🥰 Wishing you a day as beautiful and special as you are.")
     st.markdown("### 💌 Love you always!")
 
-    # Balloons!
+    # Balloons
     st.balloons()
